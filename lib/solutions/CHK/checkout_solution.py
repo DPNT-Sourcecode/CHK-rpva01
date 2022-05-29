@@ -3,7 +3,7 @@
 # noinspection PyUnusedLocal
 # skus = unicode string
 
-unit_cost = {"A": 50, "B": 30, "C":20, "D": 15, "E": 40, "F": 1}
+unit_cost = {"A": 50, "B": 30, "C":20, "D": 15, "E": 40, "F": 10}
 multi_deals = {"A": [(5, 200), (3, 130)], "B": [(2,45)]}
 free_deals = [("E", 2 , "B", 1), ("F", 2, "F", 1)]
 
@@ -41,3 +41,4 @@ def checkout(skus):
         total += quantities[c]*unit_cost[c]
 
     return total
+
