@@ -41,4 +41,3 @@ def checkout(skus):
         total += quantities[c]*unit_cost[c]
 
     return total
-
