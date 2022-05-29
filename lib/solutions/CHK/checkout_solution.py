@@ -13,11 +13,14 @@ def checkout(skus):
     for c in skus:
         if c in quantities:
             quantities[c] += 1
+        else:
+            return -1
     
     total = 0
     for c in quantities:
         total += (quantities[c]//deals[c][0])*deals[c][1] + (quantities[c]%deals[c][0])*unit_cost[c]
 
     return total
+
 
 
