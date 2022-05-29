@@ -21,6 +21,3 @@ def checkout(skus):
         total += (quantities[c]//deals[c][0])*deals[c][1] + (quantities[c]%deals[c][0])*unit_cost[c]
 
     return total
-
-
-
