@@ -12,6 +12,7 @@ multi_deals = {"A": [(5, 200), (3, 130)], "B": [(2,45)],
             "P" : [(5,200)], "Q": [(3, 80)], "V": [(3,130), (2,90)]}
 free_deals = [("E", 2 , "B", 1), ("F", 2, "F", 1), ("N", 3, "M", 1), 
             ("R", 3, "Q", 1), ("U", 3, "U", 1)]
+joint_deals = [("S", "T", "X", "Y", "Z"), 45, 3]
 
 def checkout(skus):
     
@@ -40,6 +41,16 @@ def checkout(skus):
             else:
                 quantities[f[2]] -= f[3]*(quantities[f[0]]//f[1])
                 quantities[f[2]] = max(0, quantities[f[2]])
+    
+    ord_joint_deals = {}
+    for j in joint_deals[0]:
+        ord_joint_deals[j] = unit_cost[j]
+    ord_joint_deals = dict(sorted(ord_joint_deals.items(), 
+                        key= lambda item: item[1], reverse=True))
+
+
+    #for x in j[0][:]:
+    #    quantities[j[0][0]] += quantities[x]
     
     for c in quantities:
         X = multi_deals.get(c, [])
