@@ -12,7 +12,7 @@ multi_deals = {"A": [(5, 200), (3, 130)], "B": [(2,45)],
             "P" : [(5,200)], "Q": [(3, 80)], "V": [(3,130), (2,90)]}
 free_deals = [("E", 2 , "B", 1), ("F", 2, "F", 1), ("N", 3, "M", 1), 
             ("R", 3, "Q", 1), ("U", 3, "U", 1)]
-joint_deals = [("S", "T", "X", "Y", "Z"), 45, 3]
+joint_deals = [(("S", "T", "X", "Y", "Z"), 45, 3)]
 
 def checkout(skus):
     
@@ -43,14 +43,26 @@ def checkout(skus):
                 quantities[f[2]] = max(0, quantities[f[2]])
     
     ord_joint_deals = {}
-    for j in joint_deals[0]:
+    for j in joint_deals[0][0]:
         ord_joint_deals[j] = unit_cost[j]
     ord_joint_deals = dict(sorted(ord_joint_deals.items(), 
                         key= lambda item: item[1], reverse=True))
 
+    sum_ojds = sum(ord_joint_deals.values())
+    joint_sum = 0
+    subtotal = 0
 
-    #for x in j[0][:]:
-    #    quantities[j[0][0]] += quantities[x]
+    for i, x in enumerate(ord_joint_deals):
+        if sum_ojds - ord_joint_deals[x] > joint_deals[0][2]:
+            joint_sum += ord_joint_deals[x]
+            sum_ojds -= ord_joint_deals[x]
+            quantities[x] = 0
+        else:
+            joint_sum += ord_joint_deals[x]
+            subtotal = joint_sum//joint_deals[0][2]
+            quantities[x] = joint_sum%joint_deals[0][2]
+
+    total += subtotal*joint_deals[0][1]
     
     for c in quantities:
         X = multi_deals.get(c, [])
