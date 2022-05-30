@@ -48,19 +48,15 @@ def checkout(skus):
     ord_joint_deals = dict(sorted(ord_joint_deals.items(), 
                         key= lambda item: item[1], reverse=True))
 
-    sum_ojds = sum(ord_joint_deals.values())
-    joint_sum = 0
-    subtotal = 0
+    sum_ojds = joint_deals[0][2](sum(ord_joint_deals.values())//joint_deals[0][2])
+    subtotal = sum_ojds//joint_deals[0][2]
 
-    for i, x in enumerate(ord_joint_deals):
-        if sum_ojds - ord_joint_deals[x] > joint_deals[0][2]:
-            joint_sum += ord_joint_deals[x]
+    for x in ord_joint_deals:
+        if sum_ojds > 0:
+            quantities[x] = max(0, ord_joint_deals[x]-sum_ojds)
             sum_ojds -= ord_joint_deals[x]
-            quantities[x] = 0
         else:
-            joint_sum += ord_joint_deals[x]
-            subtotal = joint_sum//joint_deals[0][2]
-            quantities[x] = joint_sum%joint_deals[0][2]
+            break
 
     total += subtotal*joint_deals[0][1]
     
